@@ -15,7 +15,8 @@ pipeline {
                     }
                 }
                 region = sh (
-                    sh 'yq \'.Regions.region\' aws_region.yml'
+                    'yq \'.Regions.region\' aws_region.yml'
+                    returnStdout: true
                 ).trim()
                 sh "export AWS_DEFAULT_REGION=${region}"
             }

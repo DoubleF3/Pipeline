@@ -17,20 +17,20 @@ resource "aws_instance" "sever-1" {
   }
 }
 
-#second ec2
-resource "aws_instance" "server-2" {
-  ami           = "ami-0b93ce03dcbcb10f6"
-  instance_type = "t3.micro"
-  key_name = "Kub"
+# #second ec2
+# resource "aws_instance" "server-2" {
+#   ami           = "ami-0b93ce03dcbcb10f6"
+#   instance_type = "t3.micro"
+#   key_name = "Kub"
 
-  tags = {
-    Name = "Server_2"
-  }
-  network_interface {
-    network_interface_id = aws_network_interface.ans1-ni.id
-    device_index         = 0
-  }
-}
+#   tags = {
+#     Name = "Server_2"
+#   }
+#   network_interface {
+#     network_interface_id = aws_network_interface.ans1-ni.id
+#     device_index         = 0
+#   }
+# }
 
 # 1.create vpc
 resource "aws_vpc" "ans-vpc" {
@@ -146,22 +146,3 @@ resource "aws_network_interface" "ans1-ni" {
 }
 
 
-# 8.assign an elastic ip to the network interface created in step 7
-resource "aws_eip" "ni-eip" {
-  vpc                       = true
-  network_interface         = aws_network_interface.ans-ni.id
-  associate_with_private_ip = "10.0.1.50"
-  depends_on = [
-    aws_internet_gateway.ans-igw
-  ]
-}
-
-
-resource "aws_eip" "ni1-eip" {
-  vpc                       = true
-  network_interface         = aws_network_interface.ans1-ni.id
-  associate_with_private_ip = "10.0.1.53"
-  depends_on = [
-    aws_internet_gateway.ans-igw
-  ]
-}
