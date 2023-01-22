@@ -7,20 +7,20 @@ pipeline {
                 git branch:'main', url: 'git@github.com:DoubleF3/Pipeline.git'
             }
         }
-        stage('Check & parse file') {
-            steps {
-                script {
-                    if(fileExists('aws_region.yml')) {
-                        echo "File aws_region.yml found!"
-                    }
-                }
-                region = sh (
-                    'yq \'.Regions.region\' aws_region.yml'
-                    returnStdout: true
-                ).trim()
-                sh "export AWS_DEFAULT_REGION=${region}"
-            }
-        }
+        // stage('Check & parse file') {
+        //     steps {
+        //         script {
+        //             if(fileExists('aws_region.yml')) {
+        //                 echo "File aws_region.yml found!"
+        //             }
+        //         }
+        //         region = sh (
+        //             'yq \'.Regions.region\' aws_region.yml'
+        //             returnStdout: true
+        //         ).trim()
+        //         sh "export AWS_DEFAULT_REGION=${region}"
+        //     }
+        // }
         
         stage('Terraform validate') {
             when {
