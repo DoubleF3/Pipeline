@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# fisrt ec2
+# fisrt ec22
 resource "aws_instance" "sever-1" {
   ami           = "ami-0b93ce03dcbcb10f6"
   instance_type = "t3.micro"
