@@ -13,13 +13,11 @@ pipeline {
                     if(fileExists('aws_region.yml')) {
                         echo "File aws_region.yml found!"
                     }
-                }
-                script {
                     region = sh (
-                    'yq \'.Regions.region\' aws_region.yml'
+                    script: 'yq \'.Regions.region\' aws_region.yml'
                     returnStdout: true
-                ).trim()
-                sh "export AWS_DEFAULT_REGION=${region}"
+                    ).trim()
+                    sh "export AWS_DEFAULT_REGION=${region}"
                 }
             }
         }
