@@ -14,11 +14,13 @@ pipeline {
                         echo "File aws_region.yml found!"
                     }
                 }
-                region = sh (
+                script {
+                    region = sh (
                     'yq \'.Regions.region\' aws_region.yml'
                     returnStdout: true
                 ).trim()
                 sh "export AWS_DEFAULT_REGION=${region}"
+                }
             }
         }
         
@@ -29,18 +31,24 @@ pipeline {
                     }
                 }
             steps {
-                sh 'terraform init -input=false'
-                sh "terraform validate -input=false"
+                script {
+                    sh 'terraform init -input=false'
+                    sh "terraform validate -input=false"
+                }
             }
         }
         stage('Terraform plan and store') {
             steps {
+                script {
                 sh 'terraform plan -out=tfplan -input=false'
+                }
             }
         }
         stage('Terraform apply form stored file') {
             steps {
+                script{
                 sh 'terraform apply -input=false -auto-approve tfplan'
+                }
             }
         }
     }
